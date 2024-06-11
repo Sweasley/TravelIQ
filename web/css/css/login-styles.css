@@ -1,0 +1,248 @@
+:root {
+  --primary: hsl(26, 93%, 50%);
+
+  --hover: hsl(26, 90%, 42%);
+
+  --white: hsl(0, 0%, 100%);
+
+  --black: hsl(0, 0%, 0%);
+
+  --text: hsl(240, 1%, 48%);
+
+  --whiteDeam: hsl(0, 0%, 93%);
+
+  --greyBg: hsl(0, 0%, 96%);
+
+  --greyText: rgb(190, 190, 190);
+
+  --inputColor: hsl(330, 12%, 97%);
+
+  --mysticb: #091d36;
+  --veniceb: #0b4c84;
+  --danubeb: #598ec2;
+  --irisb: #9bc1ee;
+  --grayf: #f0eff5;
+  --peach: #ff724c;
+  --aquablue: #1e90ff;
+  --gold: #ffa500;
+
+  /* React colors  */
+  --primary: hsl(26, 93%, 50%);
+  --hover: hsl(26, 90%, 42%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --text: hsl(240, 1%, 48%);
+  --whiteDeam: hsl(0, 0%, 93%);
+  --greyBg: hsl(0, 0%, 96%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: hsl(330, 12%, 97%);
+}
+
+* {
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  font-family: Arial, sans-serif;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+.fluid-container {
+  height: 100vh; /* Make the container fill the viewport */
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background-color: var(--white);
+}
+
+.row {
+  height: 100%;
+
+  width: 100%;
+}
+
+.form-container {
+  background-color: var(--white);
+
+  padding: 30px;
+
+  border-radius: 8px;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  height: 100vh; /* Maximize height */
+
+  display: flex; /* Use flexbox for centering */
+
+  flex-direction: column; /* Stack children vertically */
+
+  justify-content: center; /* Center vertically */
+
+  align-items: center;
+}
+
+.form-container .form-content {
+  max-width: 500px; /* Set a maximum width for the form content */
+
+  width: 100%; /* Make the form content fill its container */
+
+  padding: 20px; /* Add some padding for better spacing */
+
+  margin: auto; /* Center the form content horizontally */
+}
+
+/* Custom CSS for centering headings */
+
+.heading-center {
+  text-align: center;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.background-image {
+  background: url("/pics/background1.jpg") no-repeat center center/cover;
+
+  margin-left: -15px;
+
+  height: 100vh; /* Match height to viewport */
+}
+
+@media (max-width: 991px) {
+  .background-image {
+    height: 100vh;
+
+    margin-left: 0;
+
+    height: auto; /* Adjust height if needed */
+  }
+}
+
+.background-image .text-container {
+  color: var(--white);
+
+  text-align: center;
+
+  padding: 20px;
+}
+
+.toggle-btn {
+  cursor: pointer;
+
+  user-select: none;
+
+  pointer-events: auto;
+
+  background: transparent;
+
+  border: none;
+
+  right: 100px; /* Adjust as needed */
+}
+
+.form-control {
+  background-color: var(--inputColor);
+
+  padding-right: 2px; /* Adjust as needed based on icon size */
+}
+
+.btn-primary {
+  background-color: var(--primary);
+
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--hover);
+
+  border-color: var(--hover);
+}
+
+.input-group-text {
+  position: absolute;
+
+  right: 0;
+
+  top: 0;
+
+  bottom: 0;
+
+  padding: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  z-index: 1; /* Ensure the icon is above the input field */
+}
+
+.text-container {
+  width: 80%;
+
+  background: linear-gradient(rgba(var(--white), 0.8));
+
+  padding: 5px;
+
+  border-radius: 10px;
+
+  backdrop-filter: blur(50px); /* Apply the blur effect */
+}
+
+.logo {
+  max-width: 100px; /* Adjust the maximum width as needed */
+
+  width: 100%; /* Ensures the image is responsive */
+}
+
+/* Navigation bar  */
+.navbar {
+  transition: all 0.5s;
+}
+.navbar-scrolled {
+  background-color: var(--mysticb);
+}
+.nav-link {
+  color: var(--whiteDeam) !important;
+  margin-left: 30px;
+}
+/* hamburger nav bar  */
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml, %3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M11 31h42'/%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M11 15h42'/%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M11 47h42'/%3e%3c/svg%3e");
+}
+.navbar-toggler {
+  color: transparent;
+  border-color: 1px solid var(--whiteDeam);
+}
+
+.navbar.navbar-expanded {
+  background-color: var(--mysticb);
+}
+/* for the drop down arrow color  */
+.arrow-down {
+  color: var(--primary) !important;
+}
+.login-nav {
+  background-color: var(--mysticb);
+}
+
+.bi {
+  color: var(--primary);
+}
+.navbar-logo {
+  max-height: 40px; /* Adjust this value as needed */
+  height: auto;
+  width: auto;
+}

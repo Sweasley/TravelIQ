@@ -1,0 +1,201 @@
+:root {
+  --main-bg-color: red;
+  --main-text-color: #ff724c;
+  --second-text-color: pink;
+  --second-bg-color: #f0eff5;
+
+  --mysticb: #091d36;
+  --veniceb: #0b4c84;
+  --danubeb: #598ec2;
+  --irisb: #9bc1ee;
+  --grayf: #f0eff5;
+  --peach: #ff724c;
+  --aquablue: #1e90ff;
+  --gold: #ffa500;
+
+  /* React colors  */
+  --primary: hsl(26, 93%, 50%);
+  --hover: hsl(26, 90%, 42%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --text: hsl(240, 1%, 48%);
+  --whiteDeam: hsl(0, 0%, 93%);
+  --greyBg: hsl(0, 0%, 96%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: hsl(330, 12%, 97%);
+  --deny: #b22222;
+  --approve: #3b7a57;
+}
+
+.primary-text {
+  color: var(--aquablue);
+}
+
+.logo-text {
+  color: var(--peach);
+}
+
+.second-text {
+  color: var(--peach);
+}
+
+/* .primary-bg {
+  background-color: red;
+} */
+
+.secondary-bg {
+  background-color: var(--grayf);
+}
+
+.rounded-full {
+  border-radius: 100%;
+}
+
+#wrapper {
+  overflow-x: hidden;
+  background-image: linear-gradient(
+    to right,
+    #baf3d7,
+    #c2f5de,
+    #cbf7e4,
+    #d4f8ea,
+    #ddfaef
+  );
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  cursor: pointer;
+}
+
+.list-group-item {
+  border: none;
+  padding: 20px 30px;
+}
+
+/* button */
+.btn {
+  background-color: var(--peach);
+  color: var(--whiteDeam);
+}
+.btn:hover {
+  background-color: var(--irisb);
+  color: var(--whiteDeam);
+}
+
+.list-group-item.active {
+  color: var(--danubeb);
+
+  font-weight: bold;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+.popping {
+  background-color: var(--gold);
+}
+
+/* card  */
+.card-cover {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.icon-square {
+  background: linear-gradient(135deg, #6d83f2, #a48cf8);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+}
+
+.card-custom {
+  background-color: var(--greyBg); /* Light gray background */
+  border: 1px solid #ddd; /* Optional: Add a border to distinguish cards */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  min-width: 18rem; /* Fixed width for all cards */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  position: relative;
+}
+
+.card-custom > div {
+  flex: 1; /* Make the content area stretch to fill the remaining space */
+}
+
+.btn {
+  width: auto; /* Ensure the button has its natural width */
+  align-self: flex-start; /* Align the button to the start of the flex container */
+}
+
+.d-flex.align-items-center {
+  display: flex;
+  align-items: center;
+}
+
+.promote-button {
+  margin-top: auto; /* Ensure the button stays at the bottom */
+}
+
+/* approve or deny button  */
+.approve-btn {
+  background-color: var(--approve);
+}
+
+.deny-btn {
+  background-color: var(--deny);
+}

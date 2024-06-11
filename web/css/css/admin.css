@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --mysticb: #091d36;
+  --veniceb: #0b4c84;
+  --danubeb: #598ec2;
+  --irisb: #9bc1ee;
+  --grayf: #f0eff5;
+  --peach: #ff724c;
+  --aquablue: #1e90ff;
+  --gold: #ffa500;
+
+  /* React colors  */
+  --primary: hsl(26, 93%, 50%);
+  --hover: hsl(26, 90%, 42%);
+  --white: hsl(0, 0%, 100%);
+  --black: hsl(0, 0%, 0%);
+  --text: hsl(240, 1%, 48%);
+  --whiteDeam: hsl(0, 0%, 93%);
+  --greyBg: hsl(0, 0%, 96%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: hsl(330, 12%, 97%);
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: var(--mysticb);
+  padding-top: 56px; /* Height of the navbar */
+}
+
+.nav-link {
+  color: #fff;
+}
+
+.nav-link:hover {
+  color: #f8f9fa;
+}
+.nav-link.active {
+  background-color: var(--hover);
+  color: var(--whiteDeam);
+}
+
+.content {
+  margin-left: 250px; /* Width of the sidebar */
+  padding: 20px;
+}
+
+.sidebar-header {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  width: 100%;
+  /* Adjust as needed */
+  text-align: center; /* Center the text */
+  background-color: var(--mysticb); /* Match sidebar background */
+  /* Ensure it's above other content */
+}
+
+.sidebar-header h1 {
+  margin: 0;
+  color: var(--white); /* Match the color of your navigation links */
+}
+
+.nav {
+  margin-top: 40px; /* Adjust to create separation between logo and nav */
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.sidebar-footer .nav-link {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.sidebar-footer .nav-link:hover {
+  color: #000;
+  background-color: #f0f0f0;
+}
+
+/* Add CSS styles for your sections here */
+.section {
+  display: none;
+  padding: 20px;
+  background-color: #f0f0f0;
+  margin-bottom: 20px;
+}
+
+.section.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%; /* Full width on smaller screens */
+    height: auto; /* Allow height to adjust */
+    padding-top: 3.5rem; /* Adjust for mobile navbar height */
+  }
+
+  /* Center navigation links on smaller screens */
+  .nav-link {
+    padding: 0.5rem 1rem; /* Padding for navigation links */
+    text-align: center; /* Center text */
+  }
+
+  /* Adjust header position on smaller screens */
+  .sidebar-header {
+    top: 0; /* Align header to the top */
+    text-align: left; /* Align text to the left */
+  }
+
+  /* Remove absolute positioning for footer on smaller screens */
+  .sidebar-footer {
+    position: relative; /* Remove absolute positioning */
+    width: auto; /* Set width to auto to allow flexibility */
+    text-align: center; /* Center text */
+  }
+}
