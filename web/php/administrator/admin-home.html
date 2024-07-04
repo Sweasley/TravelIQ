@@ -1,120 +1,4 @@
-<?php
 
-  session_start();
-  error_reporting(E_ALL);
-  ini_set('display_errors', 1);
-
-  require "../connect.php";
-
-
-  // CHARTS 
- // Fetch data from the database
-$sql = "SELECT MONTHNAME(transactionDate) AS MONTH, SUM(amount) AS Amount FROM profitTable GROUP BY Month";
-$result = $conn->query($sql);
-
-$getMonthlyProfit = $conn->query("SELECT MONTHNAME(transactiondate) AS month, SUM(amount) AS total_amount FROM profitTable GROUP BY MONTHNAME(transactiondate)");
-$monthlyProfitData = [];
-while ($row = $getMonthlyProfit->fetch_assoc()) {
-    $monthlyProfitData[] = $row;
-}
-
-// Fetch gender distribution data from the database
-$genderSql = "SELECT gender, COUNT(*) AS count FROM demogTable GROUP BY gender";
-$genderResult = $conn->query($genderSql);
-
-$genderDistributionData = [];
-while ($row = $genderResult->fetch_assoc()) {
-    $genderDistributionData[] = $row;
-}
-
-// Fetch region population data from the database
-$regionSql = "SELECT region, COUNT(*) AS population FROM demogTable GROUP BY region";
-$regionResult = $conn->query($regionSql);
-
-$regionPopulationData = [];
-while ($row = $regionResult->fetch_assoc()) {
-    $regionPopulationData[] = $row;
-}
-
-  $setHeader = "SELECT (SELECT COUNT(*) FROM bookingTable WHERE curdate() < deptDate) AS active, (SELECT COUNT(*) FROM bookingTable WHERE curdate() < deptDate AND returndate IS NOT NULL AND returndate > curdate()) AS current, (SELECT COUNT(*) FROM bookingTable) AS total";
-  $getHeader=$conn->query($setHeader);
-  $placeHeader=$getHeader->fetch_assoc();
-
-  $showProfit = "SELECT YEAR(transactiondate) AS Year, MONTH(transactiondate) AS Month, SUM(amount) AS amount, CONCAT(ROUND((SUM(amount) / (SELECT SUM(amount) FROM profitTable) * 100), 2), '%') AS Percentage FROM profitTable GROUP BY YEAR(transactiondate), MONTH(transactiondate) ORDER BY Year DESC, Month DESC";
-  $getProfit=$conn->query($showProfit);
-
-  $showGender = "SELECT gender AS gender, COUNT(*) AS count, CONCAT(ROUND(COUNT(*) / (SELECT COUNT(*) FROM demogTable) * 100, 2), '%') AS percentage FROM demogTable GROUP BY gender ORDER BY count desc";
-  $getGender=$conn->query($showGender);
-
-  $showRegion = "SELECT region AS region, COUNT(*) AS count, CONCAT(ROUND(COUNT(*) / (SELECT COUNT(*) FROM demogTable) * 100, 2), '%') AS percentage FROM demogTable GROUP BY region ORDER BY count desc";
-  $getRegion=$conn->query($showRegion);
-
-  $showProvince = "SELECT province AS province, COUNT(*) AS count, CONCAT(ROUND(COUNT(*) / (SELECT COUNT(*) FROM demogTable) * 100, 2), '%') AS percentage FROM demogTable GROUP BY province ORDER BY count DESC";
-  $getProvince=$conn->query($showProvince);
-
-  $showCity = "SELECT city AS city, COUNT(*) AS count, CONCAT(ROUND(COUNT(*) / (SELECT COUNT(*) FROM demogTable) * 100, 2), '%') AS percentage FROM demogTable GROUP BY city ORDER BY count DESC";
-  $getCity=$conn->query($showCity);
-
-  $showCustomer = "SELECT * FROM usertable LEFT JOIN demogtable ON usertable.userID = demogtable.userID WHERE usertable.userrole = 2";
-  $getCustomer=$conn->query($showCustomer);
-
-  $showBooking = "SELECT CONCAT(YEAR(deptDate), '-', destination) AS Date, COUNT(*) AS Count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingtable GROUP BY Date ORDER BY Date Asc";
-  $getBooking=$conn->query($showBooking);
-
-  $reportHeadergender = "SELECT gender, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY gender ORDER BY percentage DESC LIMIT 1";
-  $getHeadergender=$conn->query($reportHeadergender);
-  $placeHeadergender=$getHeadergender->fetch_assoc();
-
-  $reportHeaderregion = "SELECT region, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY region ORDER BY percentage DESC LIMIT 1";
-  $getHeaderregion=$conn->query($reportHeaderregion);
-  $placeHeaderregion=$getHeaderregion->fetch_assoc();
-
-  $reportHeaderprovince = "SELECT province, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY province ORDER BY percentage DESC LIMIT 1";
-  $getHeaderprovince=$conn->query($reportHeaderprovince);
-  $placeHeaderprovince=$getHeaderprovince->fetch_assoc();
-
-  $reportHeadercity = "SELECT city, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY city ORDER BY percentage DESC LIMIT 1";
-  $getHeadercity=$conn->query($reportHeadercity);
-  $placeHeadercity=$getHeadercity->fetch_assoc();
-
-  $setGenderreport = "SELECT gender, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY gender ORDER BY percentage DESC";
-  $getGenderreport=$conn->query($setGenderreport);
-
-  $setRegionreport = "SELECT region, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY region ORDER BY percentage DESC";
-  $getRegionreport=$conn->query($setRegionreport);
-
-  $setProvincereport = "SELECT province, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY province ORDER BY percentage DESC";
-  $getProvincereport=$conn->query($setProvincereport);
-
-  $setCityreport = "SELECT city, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable) * 100), 2), '%') AS percentage FROM bookingTable INNER JOIN demogTable ON bookingTable.username = demogtable.username GROUP BY city ORDER BY percentage DESC";
-  $getCityreport=$conn->query($setCityreport);
-
-  $setPromo = "SELECT travelType AS travelType, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable WHERE travelType IS NOT NULL) * 100), 2), '%') AS percentage FROM bookingTable WHERE travelType IS NOT NULL GROUP BY travelType";
-  $getPromo = $conn->query($setPromo);
-
-  $setPromocard = "SELECT travelType AS travelType, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable WHERE travelType IS NOT NULL) * 100), 2), '%') AS percentage FROM bookingTable WHERE travelType IS NOT NULL GROUP BY travelType ORDER BY percentage DESC LIMIT 1";
-  $getPromocard = $conn->query($setPromocard);
-  $placePromocard = $getPromocard->fetch_assoc();
-
-  $setVehiclecard = "SELECT vehicleType AS vehicleType, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable WHERE travelType IS NOT NULL) * 100), 2), '%') AS percentage FROM bookingTable WHERE travelType IS NOT NULL GROUP BY vehicleType ORDER BY percentage DESC LIMIT 1";
-  $getVehiclecard = $conn->query($setVehiclecard);
-  $placeVehiclecard = $getVehiclecard->fetch_assoc();
-
-  $setVehicle = "SELECT vehicleType AS vehicleType, COUNT(*) AS count, CONCAT(ROUND((COUNT(*)/(SELECT COUNT(*) FROM bookingTable WHERE travelType IS NOT NULL) * 100), 2), '%') AS percentage FROM bookingTable WHERE travelType IS NOT NULL GROUP BY vehicleType ORDER BY percentage DESC";
-  $getVehicle=$conn->query($setVehicle);
-
-  $setCB = "SELECT * FROM bookingTable";
-  $getCB=$conn->query($setCB);
-
-  $setAnalytics = "SELECT YEAR(transactiondate) AS Year, SUM(amount) AS amount, CONCAT(ROUND((SUM(amount) / (SELECT SUM(amount) FROM profitTable) * 100), 2), '%') AS Percentage FROM profitTable GROUP BY YEAR(transactiondate) ORDER BY Year";
-  $getAnalytics=$conn->query($setAnalytics);
-
-  $setTransactionData = "SELECT * FROM transactionTable WHERE approval IS NULL";
-  $getTransactionData=$conn->query($setTransactionData);
-
-   $setPromo = "SELECT * FROM postTable WHERE is_promo = true";
-   $getPromodata=$conn->query($setPromo);
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -246,7 +130,8 @@ while ($row = $regionResult->fetch_assoc()) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <i class="fas fa-user me-2"></i><?php echo $_SESSION["username"];?>
+                  <i class="fas fa-user me-2"></i>
+                  Wesley
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="edit-profile-admin.php">Profile</a></li>
@@ -261,145 +146,54 @@ while ($row = $regionResult->fetch_assoc()) {
         <!-- page content  -->
         <div class="container-fluid px-4">
           <div class="container-fluid">
-         
             <!-- --------------------------Sales Analytics Section----------- -->
             <div class="row g-3 my-2 section" id="Sales">
               <div class="container-fluid px-4">
                 <div class="row g-3 my-2 justify-content-center">
                   <div class="col-md-3">
-                    <div
-                      class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded"
-                    >
+                    <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 class="fs-2"><?php echo $placeHeader["current"];?></h3>
+                        <h3 class="fs-2">100</h3> <!-- Dummy data for current bookings -->
                         <p class="fs-6">Current Bookings</p>
                       </div>
-                      <i
-                        class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"
-                      ></i>
+                      <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                     </div>
                   </div>
-
+            
                   <div class="col-md-3">
-                    <div
-                      class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded"
-                    >
+                    <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 class="fs-2"><?php echo $placeHeader["total"]?></h3>
+                        <h3 class="fs-2">500</h3> <!-- Dummy data for total bookings -->
                         <p class="fs-6">Total Bookings</p>
                       </div>
-                      <i
-                        class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"
-                      ></i>
+                      <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                     </div>
                   </div>
-
+            
                   <div class="col-md-3">
-                    <div
-                      class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded"
-                    >
+                    <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 class="fs-2"><?php echo $placeHeader["active"]?></h3>
+                        <h3 class="fs-2">50</h3> <!-- Dummy data for active bookings -->
                         <p class="fs-6">Active Booking</p>
                       </div>
-                      <i
-                        class="fas fa-book-open fs-1 primary-text border rounded-full secondary-bg p-3"
-                      ></i>
+                      <i class="fas fa-book-open fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                     </div>
                   </div>
-
-                 
                 </div>
-
-                <!-- table  -->
-
-                <!-- drop down filter  -->
-                <!-- <div class="dropdown">
-                 
-
-                 <div style="width: 80%; margin: auto" class="chart">
-                  <canvas
-                    id="monthlySalesChart"
-                    width="400"
-                    height="200"
-                  ></canvas>
-                </div>
-                </div> -->
-
+            
+                <!-- Monthly Profit Chart -->
                 <div class="container mt-5 text-center">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <h3>Monthly Profit</h3>
-                <canvas id="monthlyProfitChart"></canvas>
-                <div id="monthlyProfitData" data-monthly-profit="<?php echo htmlspecialchars(json_encode($monthlyProfitData), ENT_QUOTES, 'UTF-8'); ?>"></div>
-            </div>
-        </div>
-    </div>
-              </div>
-                <!-- <div class="row my-5">
-                  <h3 class="fs-4 mb-3">Sales Report</h3>
-                  <div class="col">
-                  <div class="table-responsive">
-                    <table class="table bg-white rounded shadow-sm table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col" width="200">Year</th>
-                          <th scope="col" width="200">Month</th>
-                          <th scope="col">Total Sales</th>
-                          <th scope="col">Percentage</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          while($row = $getProfit->fetch_assoc()){
-                            if($row["Month"] == 1){
-                              $row["Month"] = "January";
-                            }
-                            if($row["Month"] == 2){
-                              $row["Month"] = "February";
-                            }
-                            if($row["Month"] == 3){
-                              $row["Month"] = "March";
-                            }
-                            if($row["Month"] == 4){
-                              $row["Month"] = "April";
-                            }
-                            if($row["Month"] == 5){
-                              $row["Month"] = "May";
-                            }
-                            if($row["Month"] == 6){
-                              $row["Month"] = "June";
-                            }
-                            if($row["Month"] == 7){
-                              $row["Month"] = "July";
-                            }
-                            if($row["Month"] == 8){
-                              $row["Month"] = "August";
-                            }
-                            if($row["Month"] == 9){
-                              $row["Month"] = "September";
-                            }
-                            if($row["Month"] == 10){
-                              $row["Month"] = "October";
-                            }
-                            if($row["Month"] == 11){
-                              $row["Month"] = "November";
-                            }
-                            if($row["Month"] == 12){
-                              $row["Month"] = "December";
-                            }
-
-
-                            echo "<tr><td>" .$row["Year"]."</td><td>".$row["Month"]."</td><td>".$row["amount"]."</td><td>".$row["Percentage"]."</td></tr>"; 
-                          }
-                        ?>
-                       
-                      </tbody>
-                    </table>
+                  <div class="row justify-content-center">
+                    <div class="col-md-6">
+                      <h3>Monthly Profit</h3>
+                      <canvas id="monthlyProfitChart"></canvas>
+                      <div id="monthlyProfitData" data-monthly-profit='{"January": 2000, "February": 2500, "March": 1800, "April": 3000, "May": 3500, "June": 2800}'></div> <!-- Dummy data for monthly profit -->
+                    </div>
                   </div>
                 </div>
-                        </div> -->
               </div>
+            </div>
+            
             </div>
             <!--------------------------- Customer Analytics Section ----------------------->
             <div class="row g-3 my-2 section" id="Customer">
